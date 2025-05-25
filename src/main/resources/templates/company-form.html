@@ -1,0 +1,16 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${company.id} != null ? 'Edit Company' : 'New Company'">Form</title>
+</head>
+<body>
+<h1 th:text="${company.id} != null ? 'Edit Company' : 'New Company'">Form</h1>
+<form th:action="${company.id} != null ? @{/companies/update/{id}(id=${company.id})} : @{/companies}"
+      th:object="${company}" method="post">
+    <label>Name:</label>
+    <input type="text" th:field="*{name}" placeholder="Company Name" required maxlength="100" />
+    <button type="submit">Save</button>
+</form>
+<a th:href="@{/companies}">Back to list</a>
+</body>
+</html>
