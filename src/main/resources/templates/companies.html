@@ -1,20 +1,25 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8" />
-    <title>Companies</title>
-</head>
-<body>
-<h1>Companies</h1>
-<a th:href="@{/companies/new}">Add Company</a>
-<table border="1">
-    <tr><th>ID</th><th>Name</th><th>Actions</th></tr>
-    <tr th:each="company : ${companies}">
-        <td th:text="${company.id}">1</td>
-        <td th:text="${company.name}">Name</td>
-        <td>
-            <a th:href="@{/companies/edit/{id}(id=${company.id})}">Edit</a> |
-        </td>
-    </tr>
-</table>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head th:replace="~{fragments/head :: commonHead('Unternehmen')}"/>
+<body class="bg-dark-300 text-gray-100">
+  <div th:replace="~{fragments/navbar :: navbar}"></div>
+  <main class="container mx-auto px-4 py-6">
+    <div th:replace="~{fragments/breadcrumbs :: crumbs(${breadcrumbs})}"></div>
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-semibold text-white">Unternehmen</h1>
+      <button onclick="openCompanyModal()" class="bg-accent-200 hover:bg-accent-300 text-gray-900 px-4 py-2 rounded-md flex items-center">
+        <i class="fas fa-plus mr-2"></i> Hinzufügen
+      </button>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div th:each="c : ${companies}">
+          <div th:replace="~{fragments/card :: companyCard(company=${c})}"></div>
+        </div>
+    </div>
+  </main>
+  <div th:replace="~{fragments/modal :: companyModal}"></div>
+  <script>
+    document.addEventListener('click', ()=>document.querySelectorAll('.dropdown-menu').forEach(m=>m.classList.add('hidden')));
+  </script>
 </body>
 </html>

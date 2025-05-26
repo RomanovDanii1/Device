@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:fragment="commonHead(title)">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+
+    <!-- Заголовок страницы -->
+    <title th:text="${title}">EquipControl</title>
+
+    <!-- TailwindCSS + ваша конфигурация -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              dark: {
+                100: '#2d3748',
+                200: '#1a202c',
+                300: '#171923',
+                400: '#0d1117',
+              },
+              accent: {
+                100: '#7f9cf5',
+                200: '#667eea',
+                300: '#5a67d8',
+              }
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- FontAwesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Ваши глобальные стили -->
+    <style>
+      body {
+        font-family: Inter, sans-serif;
+        background-color: #0d1117;
+        color: #e2e8f0;
+      }
+      .card {
+        transition: all .3s ease;
+      }
+      .modal {
+        transition: opacity .2s ease;
+      }
+    </style>
+  </head>
+</html>

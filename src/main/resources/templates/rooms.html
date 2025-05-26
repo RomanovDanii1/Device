@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head th:replace="fragments/head :: commonHead('Räume')"/>
+<body class="bg-dark-300 text-gray-100">
+  <div th:replace="fragments/navbar :: navbar"></div>
+  <div class="container mx-auto px-4 py-6">
+
+    <div th:replace="fragments/breadcrumbs :: crumbs(${breadcrumbs})"></div>
+
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-semibold text-white">Räume</h1>
+      <button onclick="openRoomModal()"
+              class="bg-accent-200 hover:bg-accent-300 text-gray-900 px-4 py-2 rounded-md flex items-center">
+        <i class="fas fa-plus mr-2"></i> Hinzufügen
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div th:each="r : ${rooms}">
+           <div th:replace="~{fragments/card :: roomCard(room=${r})}"></div>
+    </div>
+
+  </div>
+
+  <!-- модалка -->
+  <div th:replace="fragments/modal :: roomModal"></div>
+
+  <script>
+    function openRoomModal(id='', name='', branchId='') {
+      document.getElementById('room-id').value       = id;
+      document.getElementById('room-name').value     = name;
+      document.getElementById('room-branch').value   = branchId;
+      const form = document.getElementById('room-form');
+      form.action = id ? `/rooms/update/${id}` : '/rooms';
+      document.getElementById('room-modal')
+              .classList.remove('opacity-0','pointer-events-none');
+      document.getElementById('room-modal-title')
+              .innerText = id ? 'Bearbeiten' : 'Neu';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+:root {
+  --color-dark-100: #2d3748;
+  --color-dark-200: #1a202c;
+  --color-dark-300: #171923;
+  --color-accent-100: #7f9cf5;
+  --color-accent-200: #667eea;
+}
+body { background: var(--color-dark-300); color: #e2e8f0; }
+.card { transition: transform .2s, box-shadow .2s; }
+.card:hover { transform: translateY(-4px);
+  box-shadow: 0 4px 10px rgba(0,0,0,.4); }
+.modal { transition: opacity .2s; }

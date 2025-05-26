@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head th:replace="fragments/head :: commonHead('Filialen')"/>
+<body class="bg-dark-300 text-gray-100">
+  <div th:replace="fragments/navbar :: navbar"></div>
+  <div class="container mx-auto px-4 py-6">
+
+    <div th:replace="fragments/breadcrumbs :: crumbs(${breadcrumbs})"></div>
+
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-semibold text-white">Filialen</h1>
+      <button onclick="openBranchModal()"
+              class="bg-accent-200 hover:bg-accent-300 text-gray-900 px-4 py-2 rounded-md flex items-center">
+        <i class="fas fa-plus mr-2"></i> Hinzufügen
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div th:each="b : ${branches}">
+           <div th:replace="~{fragments/card :: branchCard(branch=${b})}"></div>
+    </div>
+
+  </div>
+
+  <!-- модалка -->
+  <div th:replace="fragments/modal :: branchModal"></div>
+
+  <script>
+    function openBranchModal(id='', name='', companyId='') {
+      document.getElementById('branch-id').value      = id;
+      document.getElementById('branch-name').value    = name;
+      document.getElementById('branch-company').value = companyId;
+      const form = document.getElementById('branch-form');
+      form.action = id ? `/branches/update/${id}` : '/branches';
+      document.getElementById('branch-modal')
+              .classList.remove('opacity-0','pointer-events-none');
+      document.getElementById('branch-modal-title')
+              .innerText = id ? 'Bearbeiten' : 'Neu';
+    }
+  </script>
+</body>
+</html>

@@ -1,8 +1,5 @@
 package config.master.config.master.dto.network;
 
-import config.master.config.master.dto.room.RoomDto;
-import config.master.config.master.model.Room;
-
 public class NetworkDto {
     private Long id;
     private String ip;

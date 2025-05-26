@@ -1,17 +1,16 @@
 package config.master.config.master.mapper;
 
-import config.master.config.master.dto.equipment.EquipmentDto;
-
-import config.master.config.master.model.Equipment;
-import config.master.config.master.model.Room;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import config.master.config.master.dto.equipment.EquipmentDto;
+import config.master.config.master.model.Equipment;
+import config.master.config.master.model.Room;
 
 
 @Mapper(componentModel = "spring")
 public interface EquipmentMapper {
 
-    // 1) Из Equipment → EquipmentDto
     @Mapping(source = "room.id",             target = "roomId")
     @Mapping(source = "nameValue",          target = "name.value")
     @Mapping(source = "nameStatus",         target = "name.status")
@@ -21,7 +20,6 @@ public interface EquipmentMapper {
     @Mapping(source = "ipStatus",           target = "ip.status")
     EquipmentDto toDto(Equipment equipment);
 
-    // 2) Из EquipmentDto → Equipment
     @Mapping(source = "roomId",              target = "room")
     @Mapping(source = "name.value",          target = "nameValue")
     @Mapping(source = "name.status",         target = "nameStatus")
@@ -29,7 +27,7 @@ public interface EquipmentMapper {
     @Mapping(source = "description.status",  target = "descriptionStatus")
     @Mapping(source = "ip.value",            target = "ipValue")
     @Mapping(source = "ip.status",           target = "ipStatus")
-    Equipment toEntity(EquipmentDto dto);
+    Equipment toEntity(EquipmentDto equipmentDto);
 
 
     default Room map(Long roomId) {

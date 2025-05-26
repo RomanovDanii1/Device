@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <nav th:fragment="crumbs(breadcrumbs)">
+      <ol class="flex text-sm text-gray-400 mb-4">
+        <li th:each="crumb : ${breadcrumbs}" class="breadcrumb-item">
+          <!-- если есть URL, выводим ссылку -->
+          <a th:if="${crumb['url'] != null}"
+             th:href="${crumb['url']}"
+             class="hover:text-accent-100"
+             th:text="${crumb['label']}">Label</a>
+          <!-- иначе просто текст -->
+          <span th:if="${crumb['url'] == null}"
+                th:text="${crumb['label']}">Label</span>
+        </li>
+      </ol>
+    </nav>
+  </body>
+</html>

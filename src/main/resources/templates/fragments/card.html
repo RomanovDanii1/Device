@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <!-- карточка компании -->
+    <div th:fragment="companyCard(company)">
+      <div class="card bg-dark-100 rounded-lg overflow-hidden border border-gray-700 hover:border-accent-100 hover:-translate-y-1 hover:shadow-lg">
+        <div class="p-5 flex justify-between items-start">
+          <div class="flex items-center">
+            <div class="bg-accent-200 rounded-full p-3 mr-4">
+              <i class="fas fa-building text-white"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-white" th:text="${company.name}">Name</h3>
+          </div>
+          <div class="relative dropdown">
+            <button class="text-gray-400 hover:text-white focus:outline-none"
+                    onclick="event.stopPropagation(); this.nextElementSibling.classList.toggle('hidden')">
+              <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <div class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-dark-200 rounded-md shadow-lg z-10 border border-gray-700">
+              <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-dark-100 hover:text-white"
+                 th:attr="onclick=|event.stopPropagation(); openCompanyModal(${company.id},'${company.name}')|">
+                <i class="fas fa-edit mr-2"></i> Bearbeiten
+              </a>
+              <a th:href="@{/companies/delete/{id}(id=${company.id})}"
+                 class="block px-4 py-2 text-sm text-gray-300 hover:bg-dark-100 hover:text-white"
+                 onclick="event.stopPropagation();return confirm('Löschen?');">
+                <i class="fas fa-trash-alt mr-2"></i> Löschen
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="mt-4 flex items-center text-sm text-gray-400">
+            <i class="fas fa-code-branch mr-1"></i>
+            <span th:text="${#lists.size(company.branches)} + ' ' + 
+               (${#lists.size(company.branches)} == 1 ? 'Filiale' : 'Filialen')">
+              0 Filialen
+            </span>
+          </div>
+        </div>
+        <div class="bg-dark-200 p-3 flex justify-end">
+          <a th:href="@{/branches(companyId=${company.id})}"
+             class="text-accent-100 hover:text-accent-200 font-medium flex items-center">
+            Filialen ansehen <i class="fas fa-chevron-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- карточка филиала -->
+    <div th:fragment="branchCard(branch)">
+      <div class="card bg-dark-100 rounded-lg overflow-hidden border border-gray-700 hover:border-accent-100 hover:-translate-y-1 hover:shadow-lg">
+        <div class="p-5 flex justify-between items-start">
+          <div class="flex items-center">
+            <div class="bg-accent-200 rounded-full p-3 mr-4">
+              <i class="fas fa-code-branch text-white"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-white" th:text="${branch.name}">Filialname</h3>
+          </div>
+          <div class="relative dropdown">
+            <button class="text-gray-400 hover:text-white focus:outline-none"
+                    onclick="event.stopPropagation(); this.nextElementSibling.classList.toggle('hidden')">
+              <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <div class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-dark-200 rounded-md shadow-lg z-10 border border-gray-700">
+              <a href="#"
+                 class="block px-4 py-2 text-sm text-gray-300 hover:bg-dark-100 hover:text-white"
+                 th:attr="onclick=|event.stopPropagation(); openBranchModal(${branch.id},'${branch.name}',${branch.company.id})|">
+                <i class="fas fa-edit mr-2"></i> Bearbeiten
+              </a>
+              <a th:href="@{/branches/delete/{id}(id=${branch.id})}"
+                 class="block px-4 py-2 text-sm text-gray-300 hover:bg-dark-100 hover:text-white"
+                 onclick="event.stopPropagation();return confirm('Löschen?');">
+                <i class="fas fa-trash-alt mr-2"></i> Löschen
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="mt-4 flex items-center text-sm text-gray-400">
+            <i class="fas fa-door-open mr-1"></i>
+            <span th:text="${#lists.size(branch.rooms)} + ' ' + 
+               (${#lists.size(branch.rooms)} == 1 ? 'Raum' : 'Räume')">
+              0 Räume
+            </span>
+          </div>
+        </div>
+        <div class="bg-dark-200 p-3 flex justify-end">
+          <a th:href="@{/rooms(branchId=${branch.id})}"
+             class="text-accent-100 hover:text-accent-200 font-medium flex items-center">
+            Räume ansehen <i class="fas fa-chevron-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- карточка комнаты -->
+    <div th:fragment="roomCard(room)">
+      <div class="card bg-dark-100 rounded-lg overflow-hidden border border-gray-700 hover:border-accent-100 hover:-translate-y-1 hover:shadow-lg">
+        <div class="p-5 flex justify-between items-start">
+          <div class="flex items-center">
+            <div class="bg-accent-200 rounded-full p-3 mr-4">
+              <i class="fas fa-door-open text-white"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-white" th:text="${room.name}">Raumname</h3>
+          </div>
+          <div class="relative dropdown">
+            <button class="text-gray-400 hover:text-white focus:outline-none"
+                    onclick="event.stopPropagation(); this.nextElementSibling.classList.toggle('hidden')">
+              <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <div class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-dark-200 rounded-md shadow-lg z-10 border border-gray-700">
+              <a href="#"
+                 class="block px-4 py-2 text-sm text-gray-300 hover:bg-dark-100 hover:text-white"
+                 th:attr="onclick=|event.stopPropagation(); openRoomModal(${room.id},'${room.name}')|">
+                <i class="fas fa-edit mr-2"></i> Bearbeiten
+              </a>
+              <a th:href="@{/rooms/delete/{id}(id=${room.id})}"
+                 class="block px-4 py-2 text-sm text-gray-300 hover:bg-dark-100 hover:text-white"
+                 onclick="event.stopPropagation();return confirm('Löschen?');">
+                <i class="fas fa-trash-alt mr-2"></i> Löschen
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <div class="mt-4 flex items-center text-sm text-gray-400">
+            <i class="fas fa-server mr-1"></i>
+            <span th:text="${#lists.size(room.equipment)} + ' ' + 
+               (${#lists.size(room.equipment)} == 1 ? 'Gerät' : 'Geräte')">
+              0 Geräte
+            </span>
+          </div>
+        </div>
+        <div class="bg-dark-200 p-3 flex justify-end">
+          <a th:href="@{/equipment(roomId=${room.id})}"
+             class="text-accent-100 hover:text-accent-200 font-medium flex items-center">
+            Geräte ansehen <i class="fas fa-chevron-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

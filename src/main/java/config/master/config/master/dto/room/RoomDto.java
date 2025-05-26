@@ -3,10 +3,6 @@ package config.master.config.master.dto.room;
 import config.master.config.master.dto.equipment.EquipmentDto;
 import config.master.config.master.dto.file.FileDto;
 import config.master.config.master.dto.network.NetworkDto;
-import config.master.config.master.model.Branch;
-import config.master.config.master.model.Equipment;
-import config.master.config.master.model.FileEntity;
-import config.master.config.master.model.Network;
 
 import java.util.ArrayList;
 import java.util.List;
